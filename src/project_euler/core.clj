@@ -1,5 +1,7 @@
 (ns project-euler.core
-  (:gen-class))
+  (:gen-class)
+  (:require [clojure.math.numeric-tower :as math]))
+
 
 ;; If we list all the natural numbers below 10 that are multiples of 3 or 5, we get 3, 5, 6
 ;; and 9. The sum of these multiples is 23.
@@ -33,6 +35,27 @@ By considering the terms in the Fibonacci sequence whose values do not exceed fo
         (recur sum second (+ first second))))))
 
 (comment "
-The prime factors of 13195 are 5, 7, 13 and 29.
+Question: The prime factors of 13195 are 5, 7, 13 and 29.
 
 What is the largest prime factor of the number 600851475143 ?")
+
+(defn prime-loop [p q]
+  "Loop until i less than q"
+    (if (= 0 (mod q p))
+      false
+      (do (if (= p (dec q))
+            true
+            (recur (inc p) q)))))
+
+(defn prime? [x]
+  (prime-loop 2 x)
+  )
+
+(defn largest-prime [counter arg]
+  (if (= 0 (mod arg counter))
+    (if (prime? counter) (def retVal counter) ))
+ ;; (println retVal)
+  (if (>= counter (math/sqrt arg))
+    retVal
+    (do
+      (recur (inc counter) arg))))
