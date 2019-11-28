@@ -59,3 +59,14 @@ What is the largest prime factor of the number 600851475143 ?")
     retVal
     (do
       (recur (inc counter) arg))))
+
+(comment "
+A palindromic number reads the same both ways. The largest palindrome made from the product of two 2-digit numbers is 9009 = 91 × 99.
+
+Find the largest palindrome made from the product of two 3-digit numbers.")
+(defn palindrome? [counter x]
+  (if (> counter (/ (count (str x)) 2))
+    true
+    (if (= (nth (str x) counter) (nth (str x) (- (count (str x)) (+ counter 1))))
+    (recur (inc counter) x)
+    false)))
