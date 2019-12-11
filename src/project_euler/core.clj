@@ -64,9 +64,32 @@ What is the largest prime factor of the number 600851475143 ?")
 A palindromic number reads the same both ways. The largest palindrome made from the product of two 2-digit numbers is 9009 = 91 × 99.
 
 Find the largest palindrome made from the product of two 3-digit numbers.")
+
+;; palindrome checker helper
 (defn palindrome? [counter x]
   (if (> counter (/ (count (str x)) 2))
     true
     (if (= (nth (str x) counter) (nth (str x) (- (count (str x)) (+ counter 1))))
     (recur (inc counter) x)
     false)))
+;; check if a number is palindrome or not
+(defn palin? [input]
+  (palindrome? 0 input))
+
+
+;; core logic
+(defn largest-palin [x y z]
+  (let [lp (atom z)]
+       (if (< x 100)
+         @lp
+         (do
+           (if (< y 100)
+             (recur (dec x) (dec x) @lp)
+             (do
+               (if (and (palin? (* x y)) (< @lp (* x y)) (>= y 100))
+             (do
+                 (reset! lp (* x y))
+                 (recur (dec x) (dec x) @lp))
+             (recur x (dec y) @lp))))))))
+
+;; eg input (largest-palin 999 999 0)
